@@ -48,29 +48,54 @@ section[data-testid="stSidebar"] p {
 }
 
 /* =========================================================================
-   SIDEBAR FILTER PILLS: ELECTRIC CYAN / OCEAN BLUE PALETTE
-   Deep Ocean Navy (#0C3652) + 100% PURE WHITE BOLD TEXT + Electric Cyan Border (#06B6D4)
+   SIDEBAR FILTER PILLS: SLEEK LIGHT-BLACK / CHARCOAL BG & CRISP WHITE TEXT
+   Soft Charcoal Dark Slate (#1F2937) + 100% Crisp Pure White Text (#FFFFFF)
    ========================================================================= */
+[data-tag],
+span[data-tag],
+div[data-tag],
+[data-testid="stMultiSelectTagsContainer"] [data-tag],
+div[data-testid="stSidebar"] [data-tag],
+div[data-testid="stSidebar"] [data-testid="stMultiSelectTagsContainer"] [data-tag],
+div[data-testid="stMultiSelect"] [data-tag],
 div[data-baseweb="select"] span[data-baseweb="tag"],
 span[data-baseweb="tag"],
+[data-baseweb="tag"],
 .stMultiSelect [data-baseweb="tag"] {
-    background-color: #0C3652 !important;
-    background: linear-gradient(135deg, #0C3652 0%, #062235 100%) !important;
-    border: 1.5px solid #06B6D4 !important;
+    background-color: #1F2937 !important;
+    background: #1F2937 !important;
+    border: 1.5px solid #374151 !important;
     border-radius: 7px !important;
-    box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3), 0 0 10px rgba(6, 182, 212, 0.15) !important;
-    padding: 4px 10px !important;
-    margin: 3px !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4) !important;
+    padding: 3px 10px !important;
+    margin: 3px 2px !important;
 }
 
+[data-tag]:hover,
+span[data-tag]:hover,
+div[data-tag]:hover,
+[data-testid="stMultiSelectTagsContainer"] [data-tag]:hover,
+div[data-testid="stSidebar"] [data-tag]:hover,
 div[data-baseweb="select"] span[data-baseweb="tag"]:hover,
-span[data-baseweb="tag"]:hover {
-    background-color: #0F476C !important;
-    border-color: #38BDF8 !important;
-    box-shadow: 0 3px 12px rgba(56, 189, 248, 0.4) !important;
+span[data-baseweb="tag"]:hover,
+[data-baseweb="tag"]:hover {
+    background-color: #2D3748 !important;
+    background: #2D3748 !important;
+    border-color: #4B5563 !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Force ALL inner text to be 100% PURE CRISP WHITE & BOLD */
+/* Force ALL inner text in filter pills to be 100% PURE CRISP WHITE & BOLD */
+[data-tag] *,
+[data-tag] span,
+[data-tag] span[title],
+[data-tag] div,
+[data-tag] p,
+[data-testid="stMultiSelectTagsContainer"] [data-tag] *,
+[data-testid="stMultiSelectTagsContainer"] [data-tag] span,
+div[data-testid="stSidebar"] [data-tag] *,
+div[data-testid="stSidebar"] [data-tag] span,
+div[data-testid="stSidebar"] [data-tag] span[title],
 div[data-baseweb="select"] span[data-baseweb="tag"] *,
 div[data-baseweb="select"] span[data-baseweb="tag"] span,
 div[data-baseweb="select"] span[data-baseweb="tag"] span[title],
@@ -84,25 +109,38 @@ span[data-baseweb="tag"] span[title],
     color: #FFFFFF !important;
     font-size: 0.88rem !important;
     font-weight: 700 !important;
-    letter-spacing: 0.02em !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+    letter-spacing: 0.01em !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85) !important;
     -webkit-font-smoothing: antialiased !important;
 }
 
-/* Remove button 'x' icon in Electric Cyan */
+/* Remove button 'x' icon in crisp white/silver with smooth red hover */
+[data-tag] button,
+[data-tag] [aria-label*="Remove"],
+[data-tag] svg,
+[data-testid="stMultiSelectTagsContainer"] [data-tag] svg,
+div[data-testid="stSidebar"] [data-tag] svg,
 div[data-baseweb="select"] span[data-baseweb="tag"] svg,
 span[data-baseweb="tag"] svg,
 .stMultiSelect [data-baseweb="tag"] svg {
-    fill: #38BDF8 !important;
+    fill: #FFFFFF !important;
+    color: #FFFFFF !important;
     width: 14px !important;
     height: 14px !important;
-    margin-left: 5px !important;
-    transition: fill 0.15s ease !important;
+    margin-left: 6px !important;
+    opacity: 0.85 !important;
+    transition: opacity 0.15s ease, fill 0.15s ease, color 0.15s ease !important;
 }
 
+[data-tag] button:hover,
+[data-tag] button:hover svg,
+[data-tag] svg:hover,
+div[data-testid="stSidebar"] [data-tag] svg:hover,
 div[data-baseweb="select"] span[data-baseweb="tag"] svg:hover,
 span[data-baseweb="tag"] svg:hover {
-    fill: #F43F5E !important;
+    fill: #EF4444 !important;
+    color: #EF4444 !important;
+    opacity: 1 !important;
 }
 
 /* Eye-Comfort Soothing Metric Cards */
