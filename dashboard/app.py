@@ -239,6 +239,51 @@ def apply_eye_comfort_theme(fig, height=400):
     return fig
 
 
+def create_ledger_plotly_table(df_data, is_profit=True, height=360):
+    """Create interactive Plotly Table equipped with zoom, pan, camera image download, and fullscreen modebar."""
+    profit_color = "#10B981" if is_profit else "#F43F5E"
+    margin_color = "#34D399" if is_profit else "#FB7185"
+
+    fig = go.Figure(data=[go.Table(
+        columnwidth=[270, 110, 85, 85, 80],
+        header=dict(
+            values=["<b>Product Name</b>", "<b>Category</b>", "<b>Total Sales</b>", "<b>Net Profit</b>", "<b>Margin %</b>"],
+            fill_color="#1E293B",
+            align=["left", "left", "right", "right", "right"],
+            font=dict(family="Plus Jakarta Sans, sans-serif", color="#FFFFFF", size=12),
+            height=34,
+            line_color="rgba(255, 255, 255, 0.12)"
+        ),
+        cells=dict(
+            values=[
+                df_data["Product Name"],
+                df_data["Category"],
+                df_data["Total_Sales"].apply(lambda x: f"${x:,.0f}"),
+                df_data["Net_Profit"].apply(lambda x: f"${x:,.0f}"),
+                df_data["Margin%"].apply(lambda x: f"{x:.1f}%")
+            ],
+            fill_color=[["#0B0F19" if i % 2 == 0 else "#111827" for i in range(len(df_data))]] * 5,
+            align=["left", "left", "right", "right", "right"],
+            font=dict(
+                family="Plus Jakarta Sans, sans-serif",
+                color=["#F1F5F9", "#94A3B8", "#38BDF8", profit_color, margin_color],
+                size=11
+            ),
+            height=28,
+            line_color="rgba(255, 255, 255, 0.05)"
+        )
+    )])
+
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="rgba(17, 24, 39, 0.7)",
+        plot_bgcolor="rgba(11, 15, 25, 0.8)",
+        height=height,
+        margin=dict(l=5, r=5, t=10, b=5)
+    )
+    return fig
+
+
 # -----------------------------------------------------------------------------
 # 4. Sidebar Filtering Engine
 # -----------------------------------------------------------------------------
@@ -386,10 +431,13 @@ with tabs[0]:
 
     # Lower Row: Top & Bottom Products
     st.markdown("#### 🏆 SKU Performance Ledger")
+    
     p_col1, p_col2 = st.columns(2)
 
     with p_col1:
-        st.markdown("**Top 10 Most Profitable Products**")
+        hdr1, btn1 = st.columns([1.5, 1])
+        with hdr1:
+            st.markdown("**🌟 Top 10 Most Profitable Products**")
         top_prod = (
             filtered_df.groupby(["Product Name", "Category", "Sub-Category"])
             .agg(Total_Sales=("Sales", "sum"), Net_Profit=("Profit", "sum"), Units=("Quantity", "sum"))
@@ -398,18 +446,35 @@ with tabs[0]:
             .head(10)
         )
         top_prod["Margin%"] = (top_prod["Net_Profit"] / top_prod["Total_Sales"]) * 100
-        st.dataframe(
-            top_prod[["Product Name", "Category", "Total_Sales", "Net_Profit", "Margin%"]].style.format({
-                "Total_Sales": "${:,.0f}",
-                "Net_Profit": "${:,.0f}",
-                "Margin%": "{:.1f}%"
-            }),
+        with btn1:
+            st.download_button(
+                label="📥 Download CSV",
+                data=top_prod[["Product Name", "Category", "Total_Sales", "Net_Profit", "Margin%"]].to_csv(index=False),
+                file_name="top_10_profitable_products.csv",
+                mime="text/csv",
+                key="dl_top_ledger_csv"
+            )
+
+        fig_top_table = create_ledger_plotly_table(top_prod, is_profit=True, height=370)
+        st.plotly_chart(
+            fig_top_table,
             width="stretch",
-            hide_index=True
+            config={
+                "displayModeBar": True,
+                "displaylogo": False,
+                "modeBarButtonsToAdd": ["toggleFullscreen"],
+                "toImageButtonOptions": {
+                    "format": "png",
+                    "filename": "top_10_profitable_products",
+                    "scale": 2
+                }
+            }
         )
 
     with p_col2:
-        st.markdown("**Bottom 10 Severe Loss-Making Products**")
+        hdr2, btn2 = st.columns([1.5, 1])
+        with hdr2:
+            st.markdown("**⚠️ Bottom 10 Severe Loss-Making Products**")
         bot_prod = (
             filtered_df.groupby(["Product Name", "Category", "Sub-Category"])
             .agg(Total_Sales=("Sales", "sum"), Net_Profit=("Profit", "sum"), Units=("Quantity", "sum"))
@@ -418,14 +483,29 @@ with tabs[0]:
             .head(10)
         )
         bot_prod["Margin%"] = (bot_prod["Net_Profit"] / bot_prod["Total_Sales"]) * 100
-        st.dataframe(
-            bot_prod[["Product Name", "Category", "Total_Sales", "Net_Profit", "Margin%"]].style.format({
-                "Total_Sales": "${:,.0f}",
-                "Net_Profit": "${:,.0f}",
-                "Margin%": "{:.1f}%"
-            }),
+        with btn2:
+            st.download_button(
+                label="📥 Download CSV",
+                data=bot_prod[["Product Name", "Category", "Total_Sales", "Net_Profit", "Margin%"]].to_csv(index=False),
+                file_name="bottom_10_loss_making_products.csv",
+                mime="text/csv",
+                key="dl_bot_ledger_csv"
+            )
+
+        fig_bot_table = create_ledger_plotly_table(bot_prod, is_profit=False, height=370)
+        st.plotly_chart(
+            fig_bot_table,
             width="stretch",
-            hide_index=True
+            config={
+                "displayModeBar": True,
+                "displaylogo": False,
+                "modeBarButtonsToAdd": ["toggleFullscreen"],
+                "toImageButtonOptions": {
+                    "format": "png",
+                    "filename": "bottom_10_loss_making_products",
+                    "scale": 2
+                }
+            }
         )
 
 
