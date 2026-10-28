@@ -1,7 +1,7 @@
 """Executive Business Intelligence & Profitability Dashboard.
 
 Superstore Sales Exploratory Data Analysis & Strategic Decision Support App.
-Built with Streamlit & Plotly featuring a Premium High-Contrast Executive Dark Theme.
+Built with Streamlit & Plotly with an Eye-Comfort Soothing Dark Slate Theme.
 """
 
 from pathlib import Path
@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 # -----------------------------------------------------------------------------
-# 1. Page Configuration & Premium Executive CSS Styling
+# 1. Page Configuration & Eye-Comfort Soothing Dark Theme
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="Superstore Sales & Profit Intelligence",
@@ -25,91 +25,92 @@ CUSTOM_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-/* Base page & ambient background glow */
+/* Base page & font */
 html, body, [class*="css"], .stApp {
     font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
-    background-color: #070A13 !important;
-    background-image: 
-        radial-gradient(circle at 10% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 90% 15%, rgba(168, 85, 247, 0.09) 0%, transparent 40%),
-        radial-gradient(circle at 50% 85%, rgba(16, 185, 129, 0.06) 0%, transparent 45%) !important;
-    background-attachment: fixed !important;
-    color: #F8FAFC !important;
-}
-
-/* Sidebar Styling: Deep Indigo/Slate with glowing border */
-section[data-testid="stSidebar"] {
-    background: linear-gradient(180deg, #0A0E1A 0%, #0D1322 100%) !important;
-    border-right: 1px solid rgba(99, 102, 241, 0.2) !important;
-}
-
-section[data-testid="stSidebar"] * {
+    background-color: #0B0F19 !important;
     color: #E2E8F0 !important;
 }
 
-section[data-testid="stSidebar"] label,
-section[data-testid="stSidebar"] p {
-    color: #F8FAFC !important;
-    font-weight: 600 !important;
+/* Sidebar Eye-Comfort Slate */
+section[data-testid="stSidebar"] {
+    background-color: #0E1526 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.07) !important;
 }
 
-/* =========================================================================
-   SIDEBAR FILTER TAGS: High-Contrast, Razor-Sharp Legibility
-   Deep Navy Background + Crisp White Bold Text + Vivid Purple/Indigo Border
-   ========================================================================= */
-div[data-baseweb="select"] span[data-baseweb="tag"],
-span[data-baseweb="tag"],
-.stMultiSelect [data-baseweb="tag"] {
-    background: #172033 !important;
-    background: linear-gradient(135deg, #1A2238 0%, #151C30 100%) !important;
-    border: 1.5px solid #818CF8 !important;
-    border-radius: 8px !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 0 10px rgba(99, 102, 241, 0.15) !important;
-    padding: 4px 10px !important;
-    margin: 3px !important;
+section[data-testid="stSidebar"] * {
+    color: #CBD5E1 !important;
 }
 
-div[data-baseweb="select"] span[data-baseweb="tag"]:hover,
-span[data-baseweb="tag"]:hover {
-    border-color: #A5B4FC !important;
-    background: #1E293B !important;
+/* Multi-select Tags: Soft Muted Indigo instead of harsh red */
+span[data-baseweb="tag"] {
+    background-color: rgba(99, 102, 241, 0.22) !important;
+    border: 1px solid rgba(129, 140, 248, 0.35) !important;
+    border-radius: 6px !important;
+    color: #C7D2FE !important;
 }
 
-div[data-baseweb="select"] span[data-baseweb="tag"] span,
-span[data-baseweb="tag"] span,
-.stMultiSelect [data-baseweb="tag"] span {
-    color: #FFFFFF !important;
-    font-size: 0.86rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.02em !important;
-    -webkit-font-smoothing: antialiased !important;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.6) !important;
+span[data-baseweb="tag"] span {
+    color: #C7D2FE !important;
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
 }
 
-div[data-baseweb="select"] span[data-baseweb="tag"] svg,
 span[data-baseweb="tag"] svg {
     fill: #A5B4FC !important;
-    width: 14px !important;
-    height: 14px !important;
-    transition: fill 0.15s ease !important;
 }
 
-div[data-baseweb="select"] span[data-baseweb="tag"] svg:hover,
-span[data-baseweb="tag"] svg:hover {
-    fill: #F43F5E !important;
+/* Eye-Comfort Soothing Metric Cards */
+div[data-testid="stMetric"] {
+    background: linear-gradient(145deg, #161F30 0%, #0F172A 100%) !important;
+    border: 1px solid rgba(148, 163, 184, 0.15) !important;
+    border-radius: 12px !important;
+    padding: 18px 22px !important;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-/* Tabs: Premium glowing indicators */
+div[data-testid="stMetric"]:hover {
+    transform: translateY(-2px) !important;
+    border-color: rgba(129, 140, 248, 0.45) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+div[data-testid="stMetricLabel"] {
+    color: #94A3B8 !important;
+}
+
+div[data-testid="stMetricLabel"] p {
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    color: #94A3B8 !important;
+    margin-bottom: 4px !important;
+}
+
+div[data-testid="stMetricValue"] {
+    color: #F8FAFC !important;
+}
+
+div[data-testid="stMetricValue"] div {
+    font-size: 1.85rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+    color: #F8FAFC !important;
+}
+
+/* Tabs: Soft Indigo highlights without glare */
 div[data-testid="stTabs"] {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
     margin-bottom: 1.5rem !important;
 }
 
 div[data-testid="stTabs"] button[role="tab"] {
     color: #94A3B8 !important;
-    font-size: 0.95rem !important;
-    font-weight: 700 !important;
-    padding: 12px 20px !important;
+    font-size: 0.92rem !important;
+    font-weight: 600 !important;
+    padding: 10px 18px !important;
     background: transparent !important;
     border: none !important;
     border-bottom: 2px solid transparent !important;
@@ -121,52 +122,47 @@ div[data-testid="stTabs"] button[role="tab"]:hover {
 }
 
 div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
-    color: #38BDF8 !important;
-    border-bottom: 2.5px solid #38BDF8 !important;
-    text-shadow: 0 0 12px rgba(56, 189, 248, 0.4) !important;
+    color: #818CF8 !important;
+    border-bottom: 2px solid #818CF8 !important;
 }
 
 /* Headers */
 h1, h2, h3, h4 {
-    color: #FFFFFF !important;
-    font-weight: 800 !important;
+    color: #F1F5F9 !important;
+    font-weight: 700 !important;
     letter-spacing: -0.02em !important;
 }
 
 .gradient-title {
-    background: linear-gradient(135deg, #38BDF8 0%, #818CF8 50%, #EC4899 100%);
+    background: linear-gradient(135deg, #93C5FD 0%, #C4B5FD 50%, #F472B6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     font-weight: 800;
     margin-bottom: 0.15rem;
-    filter: drop-shadow(0 2px 10px rgba(56, 189, 248, 0.2));
 }
 
 .subtitle-text {
     color: #94A3B8 !important;
     font-size: 1.05rem !important;
     font-weight: 500 !important;
-    margin-bottom: 1.3rem !important;
+    margin-bottom: 1.2rem !important;
 }
 
 /* Dataframe & Tables */
 div[data-testid="stDataFrame"] {
-    border: 1px solid rgba(148, 163, 184, 0.2) !important;
-    border-radius: 12px !important;
-    background-color: #0F172A !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(148, 163, 184, 0.12) !important;
+    border-radius: 10px !important;
+    background-color: #111827 !important;
     overflow: hidden !important;
 }
 
-/* Info & Benchmark Box */
+/* Alert / Info Boxes with comfortable contrast */
 div[data-testid="stAlert"] {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%) !important;
-    border: 1px solid rgba(99, 102, 241, 0.3) !important;
-    border-left: 4px solid #818CF8 !important;
+    background-color: rgba(30, 41, 59, 0.6) !important;
+    border: 1px solid rgba(148, 163, 184, 0.2) !important;
     border-radius: 10px !important;
-    color: #F1F5F9 !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+    color: #E2E8F0 !important;
 }
 </style>
 """
@@ -210,35 +206,34 @@ df_rfm = load_rfm()
 
 
 # -----------------------------------------------------------------------------
-# 3. Premium Eye-Comfort Plotly Styler Helper
+# 3. Eye-Comfort Plotly Styler Helper
 # -----------------------------------------------------------------------------
-def apply_premium_chart_theme(fig, height=420):
-    """Apply rich, high-contrast dark theme to Plotly figures."""
+def apply_eye_comfort_theme(fig, height=400):
+    """Apply low-glare, dark slate eye-comfort theme to Plotly figures."""
     fig.update_layout(
         template="plotly_dark",
-        paper_bgcolor="rgba(15, 23, 42, 0.75)",
-        plot_bgcolor="rgba(11, 15, 25, 0.85)",
+        paper_bgcolor="#111827",
+        plot_bgcolor="#0B0F19",
         font=dict(family="Plus Jakarta Sans, sans-serif", color="#CBD5E1", size=11),
-        title_font=dict(family="Plus Jakarta Sans, sans-serif", color="#FFFFFF", size=15),
+        title_font=dict(family="Plus Jakarta Sans, sans-serif", color="#F1F5F9", size=14),
         height=height,
-        margin=dict(l=25, r=25, t=55, b=25),
+        margin=dict(l=25, r=25, t=50, b=25),
         xaxis=dict(
-            gridcolor="rgba(255, 255, 255, 0.06)",
-            zerolinecolor="rgba(255, 255, 255, 0.12)",
+            gridcolor="rgba(255, 255, 255, 0.05)",
+            zerolinecolor="rgba(255, 255, 255, 0.1)",
             tickfont=dict(color="#94A3B8"),
-            title_font=dict(color="#E2E8F0", size=12)
+            title_font=dict(color="#CBD5E1")
         ),
         yaxis=dict(
-            gridcolor="rgba(255, 255, 255, 0.06)",
-            zerolinecolor="rgba(255, 255, 255, 0.12)",
+            gridcolor="rgba(255, 255, 255, 0.05)",
+            zerolinecolor="rgba(255, 255, 255, 0.1)",
             tickfont=dict(color="#94A3B8"),
-            title_font=dict(color="#E2E8F0", size=12)
+            title_font=dict(color="#CBD5E1")
         ),
         legend=dict(
-            font=dict(color="#E2E8F0"),
-            bgcolor="rgba(15, 23, 42, 0.85)",
-            bordercolor="rgba(255, 255, 255, 0.1)",
-            borderwidth=1
+            font=dict(color="#CBD5E1"),
+            bgcolor="rgba(17, 24, 39, 0.8)",
+            bordercolor="rgba(255, 255, 255, 0.05)"
         )
     )
     return fig
@@ -272,8 +267,8 @@ with st.sidebar:
     selected_buckets = st.multiselect("Discount Bucket", all_buckets, default=all_buckets)
 
     st.markdown("---")
-    st.markdown("### 📌 Executive Guardrail")
-    st.info("💡 **Discount Cliff:** Discounts exceeding **20%** produce an alarming **91.6% to 100% loss-making rate**.")
+    st.markdown("### 📌 Quick Benchmark")
+    st.info("💡 **Breakeven Ceiling:** Any discount above **20%** triggers severe loss-making transactions.")
 
 
 # Filter logic
@@ -291,12 +286,12 @@ if filtered_df.empty:
 
 
 # -----------------------------------------------------------------------------
-# 5. Header & Premium Glowing KPI Cards
+# 5. Header & Global Eye-Comfort KPIs
 # -----------------------------------------------------------------------------
 st.markdown('<div class="gradient-title">Superstore Executive Sales & Profit Intelligence</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle-text">Diagnostic Exploratory Data Analysis & Strategic Profitability Platform</div>', unsafe_allow_html=True)
 
-# Metrics calculation
+# Top KPI Metric Cards
 total_sales = filtered_df["Sales"].sum()
 total_profit = filtered_df["Profit"].sum()
 overall_margin = (total_profit / total_sales * 100) if total_sales > 0 else 0
@@ -306,117 +301,17 @@ loss_orders = filtered_df["Is_Loss"].sum()
 loss_rate = (loss_orders / total_items * 100) if total_items > 0 else 0
 avg_lead_time = filtered_df["Shipping_Days"].mean()
 
-
-def render_premium_kpi_card(title, value, subtitle, icon, accent_color, badge_text="", is_positive=True):
-    """Render a modern, luminous executive KPI card."""
-    badge_bg = f"{accent_color}22" if is_positive else "rgba(244, 63, 94, 0.22)"
-    badge_color = accent_color if is_positive else "#FB7185"
-    badge_border = f"{accent_color}55" if is_positive else "rgba(244, 63, 94, 0.5)"
-    
-    badge_html = f"""
-    <span style="display:inline-block; padding: 3px 9px; border-radius: 9999px; font-size: 0.72rem; font-weight: 700; background: {badge_bg}; color: {badge_color}; border: 1px solid {badge_border}; letter-spacing: 0.02em;">
-        {badge_text}
-    </span>
-    """ if badge_text else ""
-
-    html = f"""
-    <div style="
-        background: linear-gradient(145deg, #131B2E 0%, #0D1424 100%);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-top: 3.5px solid {accent_color};
-        border-radius: 14px;
-        padding: 18px 20px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45), 0 0 15px {accent_color}12;
-        margin-bottom: 15px;
-    ">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <span style="color: #94A3B8; font-size: 0.76rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em;">{title}</span>
-            <span style="font-size: 1.15rem; padding: 4px 8px; border-radius: 8px; background: {accent_color}18; color: {accent_color};">{icon}</span>
-        </div>
-        <div style="font-size: 1.95rem; font-weight: 800; color: #FFFFFF; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 6px;">
-            {value}
-        </div>
-        <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; color: #94A3B8;">
-            <span>{subtitle}</span>
-            {badge_html}
-        </div>
-    </div>
-    """
-    return html
-
-
-col_k1, col_k2, col_k3, col_k4, col_k5 = st.columns(5)
-
-with col_k1:
-    st.markdown(
-        render_premium_kpi_card(
-            title="Gross Revenue",
-            value=f"${total_sales:,.0f}",
-            subtitle=f"{total_orders:,} Orders Placed",
-            icon="💎",
-            accent_color="#38BDF8",
-            badge_text="Volume Leader",
-            is_positive=True
-        ),
-        unsafe_allow_html=True
-    )
-
-with col_k2:
-    st.markdown(
-        render_premium_kpi_card(
-            title="Net Profit",
-            value=f"${total_profit:,.0f}",
-            subtitle="Bottom-Line Cash",
-            icon="📈",
-            accent_color="#10B981" if total_profit >= 0 else "#F43F5E",
-            badge_text=f"{overall_margin:+.1f}% Margin",
-            is_positive=total_profit >= 0
-        ),
-        unsafe_allow_html=True
-    )
-
-with col_k3:
-    margin_ok = overall_margin >= 12.0
-    st.markdown(
-        render_premium_kpi_card(
-            title="Profit Margin",
-            value=f"{overall_margin:.1f}%",
-            subtitle="Net / Gross Ratio",
-            icon="⚡",
-            accent_color="#A855F7",
-            badge_text="Target ≥ 12%" if margin_ok else "Below Benchmark",
-            is_positive=margin_ok
-        ),
-        unsafe_allow_html=True
-    )
-
-with col_k4:
-    st.markdown(
-        render_premium_kpi_card(
-            title="Loss Order Rate",
-            value=f"{loss_rate:.1f}%",
-            subtitle=f"{loss_orders:,} of {total_items:,} Items",
-            icon="⚠️",
-            accent_color="#F43F5E",
-            badge_text="Attention Required",
-            is_positive=False
-        ),
-        unsafe_allow_html=True
-    )
-
-with col_k5:
-    st.markdown(
-        render_premium_kpi_card(
-            title="Avg Fulfillment",
-            value=f"{avg_lead_time:.1f} Days",
-            subtitle="Order to Dispatch",
-            icon="🚚",
-            accent_color="#F59E0B",
-            badge_text="4 Delivery Tiers",
-            is_positive=True
-        ),
-        unsafe_allow_html=True
-    )
+kpi1, kpi2, kpi3, kpi4, kpi5 = st.columns(5)
+kpi1.metric("Gross Sales", f"${total_sales:,.0f}", help="Total revenue generated")
+kpi2.metric(
+    "Net Profit",
+    f"${total_profit:,.0f}",
+    delta=f"{overall_margin:.1f}% margin",
+    delta_color="normal" if total_profit >= 0 else "inverse"
+)
+kpi3.metric("Profit Margin", f"{overall_margin:.1f}%", help="Net Profit / Gross Sales")
+kpi4.metric("Loss-Making Rate", f"{loss_rate:.1f}%", f"{loss_orders:,} items", delta_color="inverse")
+kpi5.metric("Avg Fulfillment", f"{avg_lead_time:.1f} Days", f"{total_orders:,} orders")
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -440,7 +335,7 @@ with tabs[0]:
     col_t1, col_t2 = st.columns([2, 1])
 
     with col_t1:
-        # Monthly Time Series Trend with Area Gradients
+        # Monthly Time Series Trend
         monthly = (
             filtered_df.set_index("Order Date")
             .resample("ME")
@@ -450,73 +345,43 @@ with tabs[0]:
         monthly["Sales_MA3"] = monthly["Sales"].rolling(3).mean()
 
         fig_trend = go.Figure()
-        # Sales area
         fig_trend.add_trace(go.Scatter(
             x=monthly["Order Date"], y=monthly["Sales"],
-            name="Monthly Sales ($)", line=dict(color="#38BDF8", width=3),
-            fill="tozeroy", fillcolor="rgba(56, 189, 248, 0.08)",
-            mode="lines+markers",
-            marker=dict(size=6, color="#38BDF8", line=dict(color="#FFFFFF", width=1.5))
+            name="Monthly Sales", line=dict(color="#60A5FA", width=2.5),
+            mode="lines+markers"
         ))
-        # 3-Month Moving Average
         fig_trend.add_trace(go.Scatter(
             x=monthly["Order Date"], y=monthly["Sales_MA3"],
-            name="Sales 3M Moving Avg", line=dict(color="#FBBF24", width=2, dash="dash")
+            name="Sales 3M Moving Avg", line=dict(color="#93C5FD", width=1.5, dash="dot")
         ))
-        # Net Profit area
         fig_trend.add_trace(go.Scatter(
             x=monthly["Order Date"], y=monthly["Profit"],
-            name="Net Profit ($)", line=dict(color="#10B981", width=3),
-            fill="tozeroy", fillcolor="rgba(16, 185, 129, 0.08)",
-            mode="lines+markers",
-            marker=dict(size=6, color="#10B981", line=dict(color="#FFFFFF", width=1.5)),
-            yaxis="y2"
+            name="Net Profit", line=dict(color="#34D399", width=2.5),
+            mode="lines+markers", yaxis="y2"
         ))
 
-        fig_trend = apply_premium_chart_theme(fig_trend, height=430)
+        fig_trend = apply_eye_comfort_theme(fig_trend, height=400)
         fig_trend.update_layout(
-            title="<b>Monthly Revenue & Profit Progression</b> (Dual-Axis with Area Fill)",
+            title="Monthly Revenue & Profit Progression (With Dual Axis)",
             hovermode="x unified",
-            yaxis=dict(
-                title=dict(text="Gross Sales ($)", font=dict(color="#38BDF8", size=12)),
-                gridcolor="rgba(255,255,255,0.06)", tickfont=dict(color="#94A3B8")
-            ),
-            yaxis2=dict(
-                title=dict(text="Net Profit ($)", font=dict(color="#10B981", size=12)),
-                overlaying="y", side="right", showgrid=False,
-                tickfont=dict(color="#10B981")
-            ),
+            yaxis=dict(title="Gross Sales ($)", showgrid=True, gridcolor="rgba(255,255,255,0.06)"),
+            yaxis2=dict(title="Net Profit ($)", overlaying="y", side="right", showgrid=False,
+                        tickfont=dict(color="#34D399"), title_font=dict(color="#34D399")),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
         )
         st.plotly_chart(fig_trend, width="stretch")
 
     with col_t2:
-        # Segment Share Donut with Center Callout
+        # Segment Share Donut
         seg_df = filtered_df.groupby("Segment").agg({"Sales": "sum", "Profit": "sum"}).reset_index()
         fig_seg = px.pie(
             seg_df, values="Sales", names="Segment",
-            title="<b>Revenue Distribution by Segment</b>",
+            title="Revenue Distribution by Segment",
             color="Segment",
-            color_discrete_map={
-                "Consumer": "#6366F1",    # Vivid Indigo
-                "Corporate": "#06B6D4",   # Electric Cyan
-                "Home Office": "#EC4899"  # Radiant Magenta
-            },
-            hole=0.62
+            color_discrete_map={"Consumer": "#818CF8", "Corporate": "#38BDF8", "Home Office": "#F472B6"},
+            hole=0.55
         )
-        fig_seg.update_traces(
-            textinfo="percent+label",
-            textposition="outside",
-            marker=dict(line=dict(color="#0B0F19", width=2.5))
-        )
-        fig_seg = apply_premium_chart_theme(fig_seg, height=430)
-        fig_seg.update_layout(
-            annotations=[dict(
-                text=f"<b>${total_sales/1e6:.2f}M</b><br><span style='font-size:11px;color:#94A3B8'>Total Sales</span>",
-                x=0.5, y=0.5, font_size=17, showarrow=False, font_color="#FFFFFF"
-            )],
-            legend=dict(orientation="h", yanchor="bottom", y=-0.15, xanchor="center", x=0.5)
-        )
+        fig_seg = apply_eye_comfort_theme(fig_seg, height=400)
         st.plotly_chart(fig_seg, width="stretch")
 
     # Lower Row: Top & Bottom Products
@@ -524,7 +389,7 @@ with tabs[0]:
     p_col1, p_col2 = st.columns(2)
 
     with p_col1:
-        st.markdown("**🌟 Top 10 Most Profitable Products**")
+        st.markdown("**Top 10 Most Profitable Products**")
         top_prod = (
             filtered_df.groupby(["Product Name", "Category", "Sub-Category"])
             .agg(Total_Sales=("Sales", "sum"), Net_Profit=("Profit", "sum"), Units=("Quantity", "sum"))
@@ -544,7 +409,7 @@ with tabs[0]:
         )
 
     with p_col2:
-        st.markdown("**⚠️ Bottom 10 Severe Loss-Making Products**")
+        st.markdown("**Bottom 10 Severe Loss-Making Products**")
         bot_prod = (
             filtered_df.groupby(["Product Name", "Category", "Sub-Category"])
             .agg(Total_Sales=("Sales", "sum"), Net_Profit=("Profit", "sum"), Units=("Quantity", "sum"))
@@ -579,24 +444,13 @@ with tabs[1]:
     cat_summary["Profit_Margin%"] = (cat_summary["Net_Profit"] / cat_summary["Gross_Sales"]) * 100
 
     c1, c2, c3 = st.columns(3)
-    cat_colors = {"Technology": "#38BDF8", "Office Supplies": "#A855F7", "Furniture": "#F97316"}
-    cat_icons = {"Technology": "💻", "Office Supplies": "📎", "Furniture": "🛋️"}
-
     for col, (_, row) in zip([c1, c2, c3], cat_summary.iterrows()):
-        c_name = row["Category"]
-        with col:
-            st.markdown(
-                render_premium_kpi_card(
-                    title=f"{c_name} Category",
-                    value=f"${row['Net_Profit']:,.0f}",
-                    subtitle=f"Sales: ${row['Gross_Sales']:,.0f}",
-                    icon=cat_icons.get(c_name, "📦"),
-                    accent_color=cat_colors.get(c_name, "#818CF8"),
-                    badge_text=f"{row['Profit_Margin%']:.1f}% Margin",
-                    is_positive=row["Net_Profit"] > 0
-                ),
-                unsafe_allow_html=True
-            )
+        col.metric(
+            f"{row['Category']} Category",
+            f"${row['Net_Profit']:,.0f} Profit",
+            f"{row['Profit_Margin%']:.1f}% Margin (Sales: ${row['Gross_Sales']:,.0f})",
+            delta_color="normal" if row["Net_Profit"] > 25000 else "off"
+        )
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -609,20 +463,19 @@ with tabs[1]:
     ).reset_index().sort_values(by="Profit", ascending=True)
     sub_summary["Margin%"] = (sub_summary["Profit"] / sub_summary["Sales"]) * 100
 
-    sub_colors = ["#F43F5E" if p < 0 else "#10B981" if p > 30000 else "#6366F1" for p in sub_summary["Profit"]]
+    sub_colors = ["#F87171" if p < 0 else "#34D399" if p > 30000 else "#818CF8" for p in sub_summary["Profit"]]
 
     fig_sub = go.Figure(go.Bar(
         x=sub_summary["Profit"],
         y=sub_summary["Sub-Category"],
         orientation="h",
-        marker=dict(color=sub_colors, line=dict(color="rgba(255,255,255,0.15)", width=1)),
+        marker=dict(color=sub_colors),
         text=[f"${p/1e3:+.1f}K ({m:.1f}%)" for p, m in zip(sub_summary["Profit"], sub_summary["Margin%"])],
-        textposition="auto",
-        textfont=dict(color="#FFFFFF", size=10, family="Plus Jakarta Sans, sans-serif")
+        textposition="auto"
     ))
-    fig_sub = apply_premium_chart_theme(fig_sub, height=560)
+    fig_sub = apply_eye_comfort_theme(fig_sub, height=540)
     fig_sub.update_layout(
-        title="<b>Sub-Category Net Profit Ranking</b> (Vivid Crimson: Loss | Emerald: Champions)",
+        title="Sub-Category Net Profit Ranking (Soft Coral: Loss | Soft Mint: Champions)",
         xaxis=dict(title="Net Profit ($)"),
         yaxis=dict(title="Sub-Category")
     )
@@ -652,14 +505,14 @@ with tabs[2]:
     with col_d1:
         fig_disc_bar = go.Figure(data=[
             go.Bar(name="Profit Margin (%)", x=disc_tier["Discount_Bucket"].astype(str),
-                   y=disc_tier["Margin%"], marker_color="#38BDF8"),
+                   y=disc_tier["Margin%"], marker_color="#60A5FA"),
             go.Bar(name="Loss-Making Order Rate (%)", x=disc_tier["Discount_Bucket"].astype(str),
-                   y=disc_tier["Loss_Rate%"], marker_color="#F43F5E")
+                   y=disc_tier["Loss_Rate%"], marker_color="#F87171")
         ])
-        fig_disc_bar = apply_premium_chart_theme(fig_disc_bar, height=410)
+        fig_disc_bar = apply_eye_comfort_theme(fig_disc_bar, height=400)
         fig_disc_bar.update_layout(
             barmode="group",
-            title="<b>Margin % vs Loss-Rate % Across Discount Buckets</b>",
+            title="Margin % vs Loss-Rate % Across Discount Buckets",
             yaxis=dict(title="Percentage (%)"),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
         )
@@ -674,12 +527,12 @@ with tabs[2]:
             y="Profit_Margin",
             color="Category",
             hover_data=["Sub-Category", "Sales", "Profit"],
-            title="<b>Order Discount vs Profit Margin Ratio</b>",
-            color_discrete_map={"Technology": "#38BDF8", "Office Supplies": "#A855F7", "Furniture": "#F97316"}
+            title="Individual Order Discount vs Profit Margin Ratio",
+            color_discrete_map={"Technology": "#60A5FA", "Office Supplies": "#C084FC", "Furniture": "#FB923C"}
         )
-        fig_scat.add_hline(y=0, line_dash="dash", line_color="#F43F5E", annotation_text="Breakeven (0% Margin)", annotation_font_color="#F43F5E")
-        fig_scat.add_vline(x=0.20, line_dash="dot", line_color="#FBBF24", annotation_text="20% Discount Cliff", annotation_font_color="#FBBF24")
-        fig_scat = apply_premium_chart_theme(fig_scat, height=410)
+        fig_scat.add_hline(y=0, line_dash="dash", line_color="#F87171", annotation_text="Breakeven (0% Margin)")
+        fig_scat.add_vline(x=0.20, line_dash="dot", line_color="#FBBF24", annotation_text="20% Discount Cliff")
+        fig_scat = apply_eye_comfort_theme(fig_scat, height=400)
         fig_scat.update_layout(yaxis=dict(range=[-2.5, 1.0]))
         st.plotly_chart(fig_scat, width="stretch")
 
@@ -701,6 +554,7 @@ with tabs[3]:
     ).reset_index()
     state_df["Margin%"] = (state_df["Profit"] / state_df["Sales"]) * 100
 
+    # US State Code Mapping for Plotly Choropleth
     us_state_to_abbrev = {
         "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR", "California": "CA",
         "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE", "Florida": "FL", "Georgia": "GA",
@@ -729,19 +583,19 @@ with tabs[3]:
             hover_data={"Code": False, "Sales": ":$,.0f", "Profit": ":$,.0f", "Margin%": ":.1f%"},
             color_continuous_scale=["#EF4444", "#334155", "#10B981"],
             color_continuous_midpoint=0,
-            title="<b>US State Net Profitability Choropleth Map</b>"
+            title="US State Net Profitability Choropleth Map"
         )
-        fig_map = apply_premium_chart_theme(fig_map, height=460)
+        fig_map = apply_eye_comfort_theme(fig_map, height=450)
         fig_map.update_geos(
             bgcolor="rgba(0,0,0,0)",
             lakecolor="#0B0F19",
             landcolor="#1E293B",
-            subunitcolor="rgba(255,255,255,0.12)"
+            subunitcolor="rgba(255,255,255,0.08)"
         )
         st.plotly_chart(fig_map, width="stretch")
 
     with col_stat:
-        st.markdown("**⚠️ Bottom 5 Loss-Hemorrhaging States**")
+        st.markdown("**Bottom 5 Loss-Hemorrhaging States**")
         st.dataframe(
             state_df.sort_values(by="Profit", ascending=True).head(5)[["State", "Sales", "Profit", "Margin%"]].style.format({
                 "Sales": "${:,.0f}",
@@ -752,7 +606,7 @@ with tabs[3]:
             hide_index=True
         )
 
-        st.markdown("**🌟 Top 5 Profit Champion States**")
+        st.markdown("**Top 5 Profit Champion States**")
         st.dataframe(
             state_df.sort_values(by="Profit", ascending=False).head(5)[["State", "Sales", "Profit", "Margin%"]].style.format({
                 "Sales": "${:,.0f}",
@@ -791,10 +645,10 @@ with tabs[4]:
                 y="Total_Sales",
                 color="Margin%",
                 color_continuous_scale="Viridis",
-                title="<b>Customer Segment Revenue & Margin (%) Contribution</b>",
+                title="Customer Segment Revenue & Margin (%) Contribution",
                 text=[f"${s/1e3:.0f}K" for s in rfm_agg["Total_Sales"]]
             )
-            fig_rfm = apply_premium_chart_theme(fig_rfm, height=410)
+            fig_rfm = apply_eye_comfort_theme(fig_rfm, height=400)
             fig_rfm.update_layout(xaxis_tickangle=-25)
             st.plotly_chart(fig_rfm, width="stretch")
 
