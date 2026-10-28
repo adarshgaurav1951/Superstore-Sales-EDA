@@ -34,30 +34,74 @@ html, body, [class*="css"], .stApp {
 
 /* Sidebar Eye-Comfort Slate */
 section[data-testid="stSidebar"] {
-    background-color: #0E1526 !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.07) !important;
+    background-color: #0D1322 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
-section[data-testid="stSidebar"] * {
-    color: #CBD5E1 !important;
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] p {
+    color: #F8FAFC !important;
+    font-weight: 600 !important;
 }
 
-/* Multi-select Tags: Soft Muted Indigo instead of harsh red */
-span[data-baseweb="tag"] {
-    background-color: rgba(99, 102, 241, 0.22) !important;
-    border: 1px solid rgba(129, 140, 248, 0.35) !important;
-    border-radius: 6px !important;
-    color: #C7D2FE !important;
+/* =========================================================================
+   SIDEBAR FILTER PILLS: ULTRA-CRISP HIGH-CONTRAST LEGIBILITY
+   Deep Slate-Navy (#172238) + 100% PURE WHITE BOLD TEXT + Glowing Indigo Border
+   ========================================================================= */
+div[data-baseweb="select"] span[data-baseweb="tag"],
+span[data-baseweb="tag"],
+.stMultiSelect [data-baseweb="tag"] {
+    background-color: #172238 !important;
+    background: #172238 !important;
+    border: 1.5px solid #6366F1 !important;
+    border-radius: 7px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
+    padding: 4px 10px !important;
+    margin: 3px !important;
 }
 
-span[data-baseweb="tag"] span {
-    color: #C7D2FE !important;
-    font-size: 0.82rem !important;
-    font-weight: 500 !important;
+div[data-baseweb="select"] span[data-baseweb="tag"]:hover,
+span[data-baseweb="tag"]:hover {
+    background-color: #1E2C47 !important;
+    border-color: #818CF8 !important;
 }
 
-span[data-baseweb="tag"] svg {
+/* Force ALL inner text to be 100% PURE CRISP WHITE & BOLD */
+div[data-baseweb="select"] span[data-baseweb="tag"] *,
+div[data-baseweb="select"] span[data-baseweb="tag"] span,
+div[data-baseweb="select"] span[data-baseweb="tag"] span[title],
+div[data-baseweb="select"] span[data-baseweb="tag"] div,
+div[data-baseweb="select"] span[data-baseweb="tag"] p,
+span[data-baseweb="tag"] *,
+span[data-baseweb="tag"] span,
+span[data-baseweb="tag"] span[title],
+.stMultiSelect [data-baseweb="tag"] *,
+.stMultiSelect [data-baseweb="tag"] span {
+    color: #FFFFFF !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+    -webkit-font-smoothing: antialiased !important;
+}
+
+/* Remove button 'x' icon */
+div[data-baseweb="select"] span[data-baseweb="tag"] svg,
+span[data-baseweb="tag"] svg,
+.stMultiSelect [data-baseweb="tag"] svg {
     fill: #A5B4FC !important;
+    width: 14px !important;
+    height: 14px !important;
+    margin-left: 5px !important;
+    transition: fill 0.15s ease !important;
+}
+
+div[data-baseweb="select"] span[data-baseweb="tag"] svg:hover,
+span[data-baseweb="tag"] svg:hover {
+    fill: #F43F5E !important;
 }
 
 /* Eye-Comfort Soothing Metric Cards */
