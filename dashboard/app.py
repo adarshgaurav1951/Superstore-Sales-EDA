@@ -1,7 +1,7 @@
 """Executive Business Intelligence & Profitability Dashboard.
 
 Superstore Sales Exploratory Data Analysis & Strategic Decision Support App.
-Built with Streamlit & Plotly.
+Built with Streamlit & Plotly with an Eye-Comfort Soothing Dark Slate Theme.
 """
 
 from pathlib import Path
@@ -12,7 +12,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 # -----------------------------------------------------------------------------
-# 1. Page Configuration & Custom CSS Styling
+# 1. Page Configuration & Eye-Comfort Soothing Dark Theme
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="Superstore Sales & Profit Intelligence",
@@ -25,74 +25,144 @@ CUSTOM_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-html, body, [class*="css"] {
-    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+/* Base page & font */
+html, body, [class*="css"], .stApp {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    background-color: #0B0F19 !important;
+    color: #E2E8F0 !important;
 }
 
-/* Metric Card Containers */
+/* Sidebar Eye-Comfort Slate */
+section[data-testid="stSidebar"] {
+    background-color: #0E1526 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+section[data-testid="stSidebar"] * {
+    color: #CBD5E1 !important;
+}
+
+/* Multi-select Tags: Soft Muted Indigo instead of harsh red */
+span[data-baseweb="tag"] {
+    background-color: rgba(99, 102, 241, 0.22) !important;
+    border: 1px solid rgba(129, 140, 248, 0.35) !important;
+    border-radius: 6px !important;
+    color: #C7D2FE !important;
+}
+
+span[data-baseweb="tag"] span {
+    color: #C7D2FE !important;
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+}
+
+span[data-baseweb="tag"] svg {
+    fill: #A5B4FC !important;
+}
+
+/* Eye-Comfort Soothing Metric Cards */
 div[data-testid="stMetric"] {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    padding: 18px 22px;
-    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(8px);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    background: linear-gradient(145deg, #161F30 0%, #0F172A 100%) !important;
+    border: 1px solid rgba(148, 163, 184, 0.15) !important;
+    border-radius: 12px !important;
+    padding: 18px 22px !important;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 div[data-testid="stMetric"]:hover {
-    transform: translateY(-2px);
-    border-color: rgba(99, 102, 241, 0.4);
-    box-shadow: 0 8px 25px 0 rgba(99, 102, 241, 0.2);
+    transform: translateY(-2px) !important;
+    border-color: rgba(129, 140, 248, 0.45) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
 }
 
 div[data-testid="stMetricLabel"] {
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #94A3B8;
+    color: #94A3B8 !important;
+}
+
+div[data-testid="stMetricLabel"] p {
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    color: #94A3B8 !important;
+    margin-bottom: 4px !important;
 }
 
 div[data-testid="stMetricValue"] {
-    font-size: 1.85rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
+    color: #F8FAFC !important;
+}
+
+div[data-testid="stMetricValue"] div {
+    font-size: 1.85rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+    color: #F8FAFC !important;
+}
+
+/* Tabs: Soft Indigo highlights without glare */
+div[data-testid="stTabs"] {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    margin-bottom: 1.5rem !important;
+}
+
+div[data-testid="stTabs"] button[role="tab"] {
+    color: #94A3B8 !important;
+    font-size: 0.92rem !important;
+    font-weight: 600 !important;
+    padding: 10px 18px !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    transition: all 0.2s ease !important;
+}
+
+div[data-testid="stTabs"] button[role="tab"]:hover {
+    color: #E2E8F0 !important;
+}
+
+div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+    color: #818CF8 !important;
+    border-bottom: 2px solid #818CF8 !important;
 }
 
 /* Headers */
-h1, h2, h3 {
-    font-weight: 700;
-    letter-spacing: -0.02em;
+h1, h2, h3, h4 {
+    color: #F1F5F9 !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
 }
 
 .gradient-title {
-    background: linear-gradient(135deg, #60A5FA 0%, #A78BFA 50%, #F472B6 100%);
+    background: linear-gradient(135deg, #93C5FD 0%, #C4B5FD 50%, #F472B6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 2.3rem;
+    font-size: 2.2rem;
     font-weight: 800;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.15rem;
 }
 
-.badge-tag {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 9999px;
-    font-size: 0.75rem;
-    font-weight: 600;
+.subtitle-text {
+    color: #94A3B8 !important;
+    font-size: 1.05rem !important;
+    font-weight: 500 !important;
+    margin-bottom: 1.2rem !important;
 }
 
-.badge-loss {
-    background-color: rgba(239, 68, 68, 0.15);
-    color: #F87171;
-    border: 1px solid rgba(239, 68, 68, 0.3);
+/* Dataframe & Tables */
+div[data-testid="stDataFrame"] {
+    border: 1px solid rgba(148, 163, 184, 0.12) !important;
+    border-radius: 10px !important;
+    background-color: #111827 !important;
+    overflow: hidden !important;
 }
 
-.badge-profit {
-    background-color: rgba(16, 185, 129, 0.15);
-    color: #34D399;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+/* Alert / Info Boxes with comfortable contrast */
+div[data-testid="stAlert"] {
+    background-color: rgba(30, 41, 59, 0.6) !important;
+    border: 1px solid rgba(148, 163, 184, 0.2) !important;
+    border-radius: 10px !important;
+    color: #E2E8F0 !important;
 }
 </style>
 """
@@ -134,11 +204,46 @@ def load_rfm():
 df_all = load_data()
 df_rfm = load_rfm()
 
+
 # -----------------------------------------------------------------------------
-# 3. Sidebar Filtering Engine
+# 3. Eye-Comfort Plotly Styler Helper
+# -----------------------------------------------------------------------------
+def apply_eye_comfort_theme(fig, height=400):
+    """Apply low-glare, dark slate eye-comfort theme to Plotly figures."""
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="#111827",
+        plot_bgcolor="#0B0F19",
+        font=dict(family="Plus Jakarta Sans, sans-serif", color="#CBD5E1", size=11),
+        title_font=dict(family="Plus Jakarta Sans, sans-serif", color="#F1F5F9", size=14),
+        height=height,
+        margin=dict(l=25, r=25, t=50, b=25),
+        xaxis=dict(
+            gridcolor="rgba(255, 255, 255, 0.05)",
+            zerolinecolor="rgba(255, 255, 255, 0.1)",
+            tickfont=dict(color="#94A3B8"),
+            title_font=dict(color="#CBD5E1")
+        ),
+        yaxis=dict(
+            gridcolor="rgba(255, 255, 255, 0.05)",
+            zerolinecolor="rgba(255, 255, 255, 0.1)",
+            tickfont=dict(color="#94A3B8"),
+            title_font=dict(color="#CBD5E1")
+        ),
+        legend=dict(
+            font=dict(color="#CBD5E1"),
+            bgcolor="rgba(17, 24, 39, 0.8)",
+            bordercolor="rgba(255, 255, 255, 0.05)"
+        )
+    )
+    return fig
+
+
+# -----------------------------------------------------------------------------
+# 4. Sidebar Filtering Engine
 # -----------------------------------------------------------------------------
 with st.sidebar:
-    st.markdown("## 🔍 Executive Filters")
+    st.markdown("### 🔍 Executive Filters")
     st.caption("Slice and diagnose performance across all dimensions.")
 
     # Year Multi-select
@@ -163,7 +268,7 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown("### 📌 Quick Benchmark")
-    st.info("**Breakeven Ceiling:** Any discount above **20%** triggers severe loss-making transactions.")
+    st.info("💡 **Breakeven Ceiling:** Any discount above **20%** triggers severe loss-making transactions.")
 
 
 # Filter logic
@@ -181,10 +286,10 @@ if filtered_df.empty:
 
 
 # -----------------------------------------------------------------------------
-# 4. Header & Global KPIs
+# 5. Header & Global Eye-Comfort KPIs
 # -----------------------------------------------------------------------------
 st.markdown('<div class="gradient-title">Superstore Executive Sales & Profit Intelligence</div>', unsafe_allow_html=True)
-st.markdown("#### Diagnostic Exploratory Data Analysis & Strategic Profitability Platform")
+st.markdown('<div class="subtitle-text">Diagnostic Exploratory Data Analysis & Strategic Profitability Platform</div>', unsafe_allow_html=True)
 
 # Top KPI Metric Cards
 total_sales = filtered_df["Sales"].sum()
@@ -211,7 +316,7 @@ kpi5.metric("Avg Fulfillment", f"{avg_lead_time:.1f} Days", f"{total_orders:,} o
 st.markdown("<br>", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
-# 5. Tabbed Deep-Dive Navigation
+# 6. Tabbed Deep-Dive Navigation
 # -----------------------------------------------------------------------------
 tabs = st.tabs([
     "📈 Executive Overview",
@@ -226,7 +331,7 @@ tabs = st.tabs([
 # TAB 1: EXECUTIVE OVERVIEW
 # =============================================================================
 with tabs[0]:
-    st.markdown("### 📊 Performance Trajectory & Commercial Momentum")
+    st.markdown("#### 📊 Performance Trajectory & Commercial Momentum")
     col_t1, col_t2 = st.columns([2, 1])
 
     with col_t1:
@@ -242,7 +347,7 @@ with tabs[0]:
         fig_trend = go.Figure()
         fig_trend.add_trace(go.Scatter(
             x=monthly["Order Date"], y=monthly["Sales"],
-            name="Monthly Sales", line=dict(color="#3B82F6", width=2.5),
+            name="Monthly Sales", line=dict(color="#60A5FA", width=2.5),
             mode="lines+markers"
         ))
         fig_trend.add_trace(go.Scatter(
@@ -251,21 +356,20 @@ with tabs[0]:
         ))
         fig_trend.add_trace(go.Scatter(
             x=monthly["Order Date"], y=monthly["Profit"],
-            name="Net Profit", line=dict(color="#10B981", width=2.5),
+            name="Net Profit", line=dict(color="#34D399", width=2.5),
             mode="lines+markers", yaxis="y2"
         ))
 
+        fig_trend = apply_eye_comfort_theme(fig_trend, height=400)
         fig_trend.update_layout(
             title="Monthly Revenue & Profit Progression (With Dual Axis)",
-            template="plotly_dark",
-            height=400,
             hovermode="x unified",
-            margin=dict(l=20, r=20, t=50, b=20),
-            yaxis=dict(title="Gross Sales ($)", showgrid=True, gridcolor="rgba(255,255,255,0.08)"),
-            yaxis2=dict(title="Net Profit ($)", overlaying="y", side="right", showgrid=False),
+            yaxis=dict(title="Gross Sales ($)", showgrid=True, gridcolor="rgba(255,255,255,0.06)"),
+            yaxis2=dict(title="Net Profit ($)", overlaying="y", side="right", showgrid=False,
+                        tickfont=dict(color="#34D399"), title_font=dict(color="#34D399")),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
         )
-        st.plotly_chart(fig_trend, use_container_width=True)
+        st.plotly_chart(fig_trend, width="stretch")
 
     with col_t2:
         # Segment Share Donut
@@ -274,15 +378,14 @@ with tabs[0]:
             seg_df, values="Sales", names="Segment",
             title="Revenue Distribution by Segment",
             color="Segment",
-            color_discrete_map={"Consumer": "#6366F1", "Corporate": "#3B82F6", "Home Office": "#EC4899"},
-            hole=0.55,
-            template="plotly_dark"
+            color_discrete_map={"Consumer": "#818CF8", "Corporate": "#38BDF8", "Home Office": "#F472B6"},
+            hole=0.55
         )
-        fig_seg.update_layout(height=400, margin=dict(l=20, r=20, t=50, b=20))
-        st.plotly_chart(fig_seg, use_container_width=True)
+        fig_seg = apply_eye_comfort_theme(fig_seg, height=400)
+        st.plotly_chart(fig_seg, width="stretch")
 
     # Lower Row: Top & Bottom Products
-    st.markdown("### 🏆 SKU Performance Ledger")
+    st.markdown("#### 🏆 SKU Performance Ledger")
     p_col1, p_col2 = st.columns(2)
 
     with p_col1:
@@ -301,7 +404,7 @@ with tabs[0]:
                 "Net_Profit": "${:,.0f}",
                 "Margin%": "{:.1f}%"
             }),
-            use_container_width=True,
+            width="stretch",
             hide_index=True
         )
 
@@ -321,7 +424,7 @@ with tabs[0]:
                 "Net_Profit": "${:,.0f}",
                 "Margin%": "{:.1f}%"
             }),
-            use_container_width=True,
+            width="stretch",
             hide_index=True
         )
 
@@ -330,7 +433,7 @@ with tabs[0]:
 # TAB 2: CATEGORY & SUB-CATEGORY
 # =============================================================================
 with tabs[1]:
-    st.markdown("### 📦 Category Economics & Margin Disparities")
+    st.markdown("#### 📦 Category Economics & Margin Disparities")
 
     cat_summary = filtered_df.groupby("Category").agg(
         Gross_Sales=("Sales", "sum"),
@@ -360,7 +463,7 @@ with tabs[1]:
     ).reset_index().sort_values(by="Profit", ascending=True)
     sub_summary["Margin%"] = (sub_summary["Profit"] / sub_summary["Sales"]) * 100
 
-    sub_colors = ["#EF4444" if p < 0 else "#10B981" if p > 30000 else "#6366F1" for p in sub_summary["Profit"]]
+    sub_colors = ["#F87171" if p < 0 else "#34D399" if p > 30000 else "#818CF8" for p in sub_summary["Profit"]]
 
     fig_sub = go.Figure(go.Bar(
         x=sub_summary["Profit"],
@@ -370,24 +473,22 @@ with tabs[1]:
         text=[f"${p/1e3:+.1f}K ({m:.1f}%)" for p, m in zip(sub_summary["Profit"], sub_summary["Margin%"])],
         textposition="auto"
     ))
+    fig_sub = apply_eye_comfort_theme(fig_sub, height=540)
     fig_sub.update_layout(
-        title="Sub-Category Net Profit Ranking (Red: Loss-Makers | Green: Champions)",
-        template="plotly_dark",
-        height=550,
+        title="Sub-Category Net Profit Ranking (Soft Coral: Loss | Soft Mint: Champions)",
         xaxis=dict(title="Net Profit ($)"),
-        yaxis=dict(title="Sub-Category"),
-        margin=dict(l=20, r=20, t=50, b=20)
+        yaxis=dict(title="Sub-Category")
     )
-    st.plotly_chart(fig_sub, use_container_width=True)
+    st.plotly_chart(fig_sub, width="stretch")
 
-    st.info("💡 **Takeaway:** Furniture generates \$742K in sales but almost zero net profit (2.5% margin) due to massive losses in **Tables (-\$17.7K)** and **Bookcases (-\$3.5K)**.")
+    st.info("💡 **Takeaway:** Furniture generates $742K in sales but almost zero net profit (2.5% margin) due to massive losses in **Tables (-$17.7K)** and **Bookcases (-$3.5K)**.")
 
 
 # =============================================================================
 # TAB 3: DISCOUNT & MARGIN CLIFF
 # =============================================================================
 with tabs[2]:
-    st.markdown("### 🎯 Promotional Discount Sensitivity & Margin Destruction")
+    st.markdown("#### 🎯 Promotional Discount Sensitivity & Margin Destruction")
     st.caption("Investigating the tipping point: Where do promotional discounts shift from sales acceleration to capital destruction?")
 
     disc_tier = filtered_df.groupby("Discount_Bucket", observed=False).agg(
@@ -404,19 +505,18 @@ with tabs[2]:
     with col_d1:
         fig_disc_bar = go.Figure(data=[
             go.Bar(name="Profit Margin (%)", x=disc_tier["Discount_Bucket"].astype(str),
-                   y=disc_tier["Margin%"], marker_color="#3B82F6"),
+                   y=disc_tier["Margin%"], marker_color="#60A5FA"),
             go.Bar(name="Loss-Making Order Rate (%)", x=disc_tier["Discount_Bucket"].astype(str),
-                   y=disc_tier["Loss_Rate%"], marker_color="#EF4444")
+                   y=disc_tier["Loss_Rate%"], marker_color="#F87171")
         ])
+        fig_disc_bar = apply_eye_comfort_theme(fig_disc_bar, height=400)
         fig_disc_bar.update_layout(
             barmode="group",
             title="Margin % vs Loss-Rate % Across Discount Buckets",
-            template="plotly_dark",
-            height=400,
             yaxis=dict(title="Percentage (%)"),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
         )
-        st.plotly_chart(fig_disc_bar, use_container_width=True)
+        st.plotly_chart(fig_disc_bar, width="stretch")
 
     with col_d2:
         # Scatter of individual transactions
@@ -428,13 +528,13 @@ with tabs[2]:
             color="Category",
             hover_data=["Sub-Category", "Sales", "Profit"],
             title="Individual Order Discount vs Profit Margin Ratio",
-            template="plotly_dark",
-            color_discrete_map={"Technology": "#3B82F6", "Office Supplies": "#8B5CF6", "Furniture": "#F97316"}
+            color_discrete_map={"Technology": "#60A5FA", "Office Supplies": "#C084FC", "Furniture": "#FB923C"}
         )
-        fig_scat.add_hline(y=0, line_dash="dash", line_color="#EF4444", annotation_text="Breakeven (0% Margin)")
-        fig_scat.add_vline(x=0.20, line_dash="dot", line_color="#F59E0B", annotation_text="20% Discount Cliff")
-        fig_scat.update_layout(height=400, yaxis=dict(range=[-2.5, 1.0]))
-        st.plotly_chart(fig_scat, use_container_width=True)
+        fig_scat.add_hline(y=0, line_dash="dash", line_color="#F87171", annotation_text="Breakeven (0% Margin)")
+        fig_scat.add_vline(x=0.20, line_dash="dot", line_color="#FBBF24", annotation_text="20% Discount Cliff")
+        fig_scat = apply_eye_comfort_theme(fig_scat, height=400)
+        fig_scat.update_layout(yaxis=dict(range=[-2.5, 1.0]))
+        st.plotly_chart(fig_scat, width="stretch")
 
     st.error("🚨 **Critical Finding:** Orders with discounts **> 20%** have an astounding **91.6% to 100% loss rate**! Eliminating or capping discounts at 20% would instantly eliminate over **$135,000 in net losses**.")
 
@@ -443,7 +543,7 @@ with tabs[2]:
 # TAB 4: REGIONAL & STATE MAP
 # =============================================================================
 with tabs[3]:
-    st.markdown("### 🗺️ Geographic Profitability & State-Level Polarization")
+    st.markdown("#### 🗺️ Geographic Profitability & State-Level Polarization")
 
     # State aggregation
     state_df = filtered_df.groupby("State").agg(
@@ -481,13 +581,18 @@ with tabs[3]:
             scope="usa",
             hover_name="State",
             hover_data={"Code": False, "Sales": ":$,.0f", "Profit": ":$,.0f", "Margin%": ":.1f%"},
-            color_continuous_scale="RdYlGn",
+            color_continuous_scale=["#EF4444", "#334155", "#10B981"],
             color_continuous_midpoint=0,
-            title="US State Net Profitability Choropleth Map",
-            template="plotly_dark"
+            title="US State Net Profitability Choropleth Map"
         )
-        fig_map.update_layout(height=450, margin=dict(l=10, r=10, t=40, b=10))
-        st.plotly_chart(fig_map, use_container_width=True)
+        fig_map = apply_eye_comfort_theme(fig_map, height=450)
+        fig_map.update_geos(
+            bgcolor="rgba(0,0,0,0)",
+            lakecolor="#0B0F19",
+            landcolor="#1E293B",
+            subunitcolor="rgba(255,255,255,0.08)"
+        )
+        st.plotly_chart(fig_map, width="stretch")
 
     with col_stat:
         st.markdown("**Bottom 5 Loss-Hemorrhaging States**")
@@ -497,7 +602,7 @@ with tabs[3]:
                 "Profit": "${:,.0f}",
                 "Margin%": "{:.1f}%"
             }),
-            use_container_width=True,
+            width="stretch",
             hide_index=True
         )
 
@@ -508,7 +613,7 @@ with tabs[3]:
                 "Profit": "${:,.0f}",
                 "Margin%": "{:.1f}%"
             }),
-            use_container_width=True,
+            width="stretch",
             hide_index=True
         )
 
@@ -517,7 +622,7 @@ with tabs[3]:
 # TAB 5: CUSTOMER RFM SEGMENTS
 # =============================================================================
 with tabs[4]:
-    st.markdown("### 👥 Customer RFM (Recency, Frequency, Monetary) Intelligence")
+    st.markdown("#### 👥 Customer RFM (Recency, Frequency, Monetary) Intelligence")
     st.caption("Behavioral customer segmentation based on recency of purchase, repeat order cadence, and lifetime monetary margin.")
 
     if df_rfm is not None:
@@ -541,11 +646,11 @@ with tabs[4]:
                 color="Margin%",
                 color_continuous_scale="Viridis",
                 title="Customer Segment Revenue & Margin (%) Contribution",
-                template="plotly_dark",
                 text=[f"${s/1e3:.0f}K" for s in rfm_agg["Total_Sales"]]
             )
-            fig_rfm.update_layout(height=400, xaxis_tickangle=-25)
-            st.plotly_chart(fig_rfm, use_container_width=True)
+            fig_rfm = apply_eye_comfort_theme(fig_rfm, height=400)
+            fig_rfm.update_layout(xaxis_tickangle=-25)
+            st.plotly_chart(fig_rfm, width="stretch")
 
         with col_rfm2:
             st.markdown("**RFM Segment Portfolio Summary**")
@@ -556,7 +661,7 @@ with tabs[4]:
                     "Total_Profit": "${:,.0f}",
                     "Margin%": "{:.1f}%"
                 }),
-                use_container_width=True,
+                width="stretch",
                 hide_index=True
             )
 
@@ -570,7 +675,7 @@ with tabs[4]:
                 "Monetary_Profit": "${:,.0f}",
                 "Profit_Margin": "{:.1%}"
             }),
-            use_container_width=True,
+            width="stretch",
             hide_index=True
         )
 
@@ -579,20 +684,20 @@ with tabs[4]:
 # TAB 6: STRATEGIC RECOMMENDATIONS & SCENARIO SIMULATOR
 # =============================================================================
 with tabs[5]:
-    st.markdown("### 💡 Executive Action Plan & Financial Scenario Simulator")
+    st.markdown("#### 💡 Executive Action Plan & Financial Scenario Simulator")
 
-    st.markdown("""
-    #### 🎯 Answers to Core Business Questions:
-    1. **Categories & Sub-Categories:** Technology (\$145.5K) and Office Supplies (\$122.5K) are star performers. Furniture is an acute drag (\$18.5K profit on \$742K sales). **Tables** lose **-$17.7K** and **Bookcases** lose **-$3.5K**.
+    st.markdown(r"""
+    ##### 🎯 Answers to Core Business Questions:
+    1. **Categories & Sub-Categories:** Technology ($145.5K) and Office Supplies ($122.5K) are star performers. Furniture is an acute drag ($18.5K profit on $742K sales). **Tables** lose **-$17.7K** and **Bookcases** lose **-$3.5K**.
     2. **Discount Dynamics:** Transactions with discounts between 0-20% maintain healthy margins (12-30%). Discounts above 20% experience an **order loss rate over 91.6%**.
-    3. **Underperforming Geography:** Texas (-\$25.7K), Ohio (-\$17.0K), Pennsylvania (-\$15.6K), and Illinois (-\$12.6K) drag company profit down by **over -$78K**.
+    3. **Underperforming Geography:** Texas (-$25.7K), Ohio (-$17.0K), Pennsylvania (-$15.6K), and Illinois (-$12.6K) drag company profit down by **over -$78K**.
     4. **Valuable Customers:** Top 20% of customers account for 73% of total profits. "Champions" and "Loyal Customers" generate >70% of enterprise margin.
     5. **Seasonality:** Q4 holiday shopping surge delivers the largest volume (peaking in November and December).
     6. **Logistics:** Standard class accounts for 60% of volume (avg 5.0 days dispatch); First Class maintains the highest margins (13.9%).
     """)
 
     st.markdown("---")
-    st.markdown("### 🎛️ Interactive Profit Sensitivity Simulator")
+    st.markdown("#### 🎛️ Interactive Profit Sensitivity Simulator")
 
     sim_col1, sim_col2 = st.columns(2)
     with sim_col1:
@@ -613,7 +718,7 @@ with tabs[5]:
     lift_pct = (lift_dollar / base_p) * 100
 
     with sim_col2:
-        st.markdown("#### Projected Financial Impact")
+        st.markdown("##### Projected Financial Impact")
         r1, r2 = st.columns(2)
         r1.metric("Simulated Net Profit", f"${sim_p:,.0f}", f"{lift_dollar:+,.0f} Lift")
         r2.metric("Profit Lift (%)", f"{lift_pct:+.1f}%", f"{(sim_p/sim_s*100):.1f}% Margin")
