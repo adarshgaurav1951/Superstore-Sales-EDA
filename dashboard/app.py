@@ -48,8 +48,8 @@ section[data-testid="stSidebar"] p {
 }
 
 /* =========================================================================
-   SIDEBAR FILTER PILLS: SLEEK LIGHT-BLACK / CHARCOAL BG & CRISP WHITE TEXT
-   Soft Charcoal Dark Slate (#1F2937) + 100% Crisp Pure White Text (#FFFFFF)
+   SIDEBAR FILTER PILLS: SLEEK DEEP DARK OBSIDIAN CHARCOAL & CRISP WHITE TEXT
+   Deep Dark Obsidian Charcoal (#111827) + 100% Crisp Pure White Text (#FFFFFF)
    ========================================================================= */
 [data-tag],
 span[data-tag],
@@ -62,11 +62,11 @@ div[data-baseweb="select"] span[data-baseweb="tag"],
 span[data-baseweb="tag"],
 [data-baseweb="tag"],
 .stMultiSelect [data-baseweb="tag"] {
-    background-color: #1F2937 !important;
-    background: #1F2937 !important;
-    border: 1.5px solid #374151 !important;
+    background-color: #111827 !important;
+    background: #111827 !important;
+    border: 1.5px solid #283344 !important;
     border-radius: 7px !important;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4) !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6) !important;
     padding: 3px 10px !important;
     margin: 3px 2px !important;
 }
@@ -79,10 +79,10 @@ div[data-testid="stSidebar"] [data-tag]:hover,
 div[data-baseweb="select"] span[data-baseweb="tag"]:hover,
 span[data-baseweb="tag"]:hover,
 [data-baseweb="tag"]:hover {
-    background-color: #2D3748 !important;
-    background: #2D3748 !important;
-    border-color: #4B5563 !important;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.5) !important;
+    background-color: #1E2638 !important;
+    background: #1E2638 !important;
+    border-color: #3E4D66 !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.7) !important;
 }
 
 /* Force ALL inner text in filter pills to be 100% PURE CRISP WHITE & BOLD */
